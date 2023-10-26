@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1068770273623",
+    "project_id": "fir-6ce49",
+    "storage_bucket": "fir-6ce49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068770273623:android:397f36153667f12d877612",
+        "android_client_info": {
+          "package_name": "br.com.gustavoVisentini.firebase_init"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs6H1H0x6DVf8xoS1-EMFJVFj6-BA2YJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
