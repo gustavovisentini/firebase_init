@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_init/home.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -33,10 +34,28 @@ class _CreateAccountState extends State<CreateAccount> {
             //instancia do bd
             FirebaseFirestore db = FirebaseFirestore.instance;
 
+            //gravar no banco
+            Map<String, dynamic> dadosUser = {
+              'nome': _nome,
+              'email': _email,
+              'cpf': _cpf
+            };
+
             auth
                 .createUserWithEmailAndPassword(
                     email: _email, password: _password)
-                .then((value) => {});
+                .then((firebaseUser) => {
+                      //gravar no banco usando o UID
+                      db
+                          .doc('usuarios')
+                          .collection(firebaseUser.user!.uid)
+                          .add(dadosUser),
+                      _msgErro = "Sucesso ao logar",
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Home()),
+                          (route) => false)
+                    });
           }
         }
       }
