@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_init/create_account.dart';
 import 'package:firebase_init/home.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,10 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
                     onPressed: () {
-                      //navigator para a tela de criar conta
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateAccount()));
                     },
                     child: Text("Create Account")),
               )
