@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_init/login.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -67,8 +68,12 @@ class _HomeState extends State<Home> {
 
   //deslogar
   void deslogar() async {
-    await auth.signOut();
-    print("Deslogado!");
+    await auth.signOut().then((value) => {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const Login()),
+              (route) => false)
+        });
   }
 
   @override
@@ -80,7 +85,7 @@ class _HomeState extends State<Home> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //deslogar();
-      verificaLogin();
+      //verificaLogin();
     });
   }
 
@@ -88,9 +93,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        child: Text('HELLO WORLD'),
-      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                deslogar();
+              },
+              child: Text("LogOut"))
+        ],
+      )),
     );
   }
 }
