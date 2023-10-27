@@ -17,6 +17,8 @@ class _CreateAccountState extends State<CreateAccount> {
   TextEditingController _controllerNome = TextEditingController();
   TextEditingController _controllerCPF = TextEditingController();
 
+  bool state = false;
+
   String _msgErro = "";
 
   _createAccount() {
@@ -47,86 +49,102 @@ class _CreateAccountState extends State<CreateAccount> {
                 .then((firebaseUser) => {
                       //gravar no banco usando o UID
                       db
-                          .doc('usuarios')
-                          .collection(firebaseUser.user!.uid)
-                          .add(dadosUser),
+                          .collection('usuarios')
+                          .doc(firebaseUser.user!.uid)
+                          .set(dadosUser),
                       _msgErro = "Sucesso ao logar",
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => Home()),
                           (route) => false)
-                    });
+                    })
+                .onError((error, stackTrace) => {_msgErro = error.toString()});
+          } else {
+            setState(() {
+              _msgErro = "Dados Invalidos";
+            });
           }
+        } else {
+          setState(() {
+            _msgErro = "Dados Invalidos";
+          });
         }
+      } else {
+        setState(() {
+          _msgErro = "Dados Invalidos";
+        });
       }
+    } else {
+      setState(() {
+        _msgErro = "Dados Invalidos";
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Account")),
-      body: Center(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //text input do email
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerEmail,
-              keyboardType: TextInputType.emailAddress,
-              autofocus: true,
-              style: TextStyle(fontSize: 20),
-              decoration: InputDecoration(hintText: "Email"),
+        appBar: AppBar(title: Text("Create Account")),
+        body: Center(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //text input do email
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _controllerEmail,
+                keyboardType: TextInputType.emailAddress,
+                autofocus: true,
+                style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(hintText: "Email"),
+              ),
             ),
-          ),
-          //text input do password
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerPassword,
-              keyboardType: TextInputType.emailAddress,
-              autofocus: false,
-              style: TextStyle(fontSize: 20),
-              decoration: InputDecoration(hintText: "Password"),
+            //text input do password
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _controllerPassword,
+                keyboardType: TextInputType.emailAddress,
+                autofocus: false,
+                style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(hintText: "Password"),
+              ),
             ),
-          ),
-          //nome do vivente
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerPassword,
-              //keyboardType: TextInput,
-              autofocus: false,
-              style: TextStyle(fontSize: 20),
-              decoration: InputDecoration(hintText: "Nome completo"),
+            //nome do vivente
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _controllerNome,
+                //keyboardType: TextInput,
+                autofocus: false,
+                style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(hintText: "Nome completo"),
+              ),
             ),
-          ),
-          //CPF
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerPassword,
-              keyboardType: TextInputType.number,
-              autofocus: false,
-              style: TextStyle(fontSize: 20),
-              decoration: InputDecoration(hintText: "CPF"),
+            //CPF
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _controllerCPF,
+                keyboardType: TextInputType.number,
+                autofocus: false,
+                style: TextStyle(fontSize: 20),
+                decoration: InputDecoration(hintText: "CPF"),
+              ),
             ),
-          ),
-          //botao criar conta
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child:
-                ElevatedButton(onPressed: () {}, child: Text("Create Account")),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: Text(_msgErro),
-          )
-        ],
-      )),
-    );
+            //botao criar conta
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                  onPressed: () {}, child: Text("Create Account")),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(_msgErro),
+            )
+          ],
+        )));
   }
 }
