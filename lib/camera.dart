@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
@@ -8,8 +11,22 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
-  _imgFromCamera() async {}
+  final ImagePicker _picker = ImagePicker();
+
+  _imgFromCamera() async {
+    final pickedFile =
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 30);
+    setState(() {
+      _image = File(pickedFile!.path);
+      imageOK = true;
+    });
+  }
+
   _imgFromLibrary() async {}
+
+  File _image = File("");
+
+  bool imageOK = false;
 
   void _showPicker(context) {
     showModalBottomSheet(
@@ -43,7 +60,25 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Camera")),
-      body: Center(),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Center(
+              child: GestureDetector(
+                  onTap: () {
+                    _showPicker(context);
+                  },
+                  child: CircleAvatar(
+                      radius: 90,
+                      child: imageOK != (false)
+                          ? Container(child: Image.file(_image))
+                          : Container(
+                              child: Text("Vazio"),
+                            ))),
+            )
+          ]),
+        ),
+      ),
     );
   }
 }

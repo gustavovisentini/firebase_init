@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_init/camera.dart';
 import 'package:firebase_init/login.dart';
 import 'package:flutter/material.dart';
 
@@ -102,7 +103,13 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 deslogar();
               },
-              child: Text("LogOut"))
+              child: Text("LogOut")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Camera()));
+              },
+              child: Text("Camera"))
         ],
       )),
     );
