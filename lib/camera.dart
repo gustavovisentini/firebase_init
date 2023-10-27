@@ -22,7 +22,14 @@ class _CameraState extends State<Camera> {
     });
   }
 
-  _imgFromLibrary() async {}
+  _imgFromLibrary() async {
+    final pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 30);
+    setState(() {
+      _image = File(pickedFile!.path);
+      imageOK = true;
+    });
+  }
 
   File _image = File("");
 
