@@ -1,3 +1,4 @@
+import 'package:firebase_init/animated1.dart';
 import 'package:firebase_init/home.dart';
 import 'package:firebase_init/login.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,6 @@ void main() async {
   await Firebase.initializeApp();
   //inicializa o app
   runApp(const MaterialApp(
-    home: Login(),
+    home: Animated1(),
   ));
 }
