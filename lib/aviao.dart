@@ -11,17 +11,6 @@ class _AviaoState extends State<Aviao> {
   bool _status = true;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      _status = !_status;
-      //delay
-      //chamar o home
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedContainer(

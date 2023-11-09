@@ -1,4 +1,5 @@
 import 'package:firebase_init/animated1.dart';
+import 'package:firebase_init/animated2.dart';
 import 'package:firebase_init/aviao.dart';
 import 'package:firebase_init/home.dart';
 import 'package:firebase_init/login.dart';
@@ -11,6 +12,6 @@ void main() async {
   await Firebase.initializeApp();
   //inicializa o app
   runApp(const MaterialApp(
-    home: Aviao(),
+    home: Animated2(),
   ));
 }
